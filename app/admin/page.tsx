@@ -21,7 +21,6 @@ const AdminLogin = () => {
     setError("");
     setLoading(true);
 
-    console.log("Attempting login with:", { email, password });
     try {
       await axios.post("/admin/login", {
         email,
