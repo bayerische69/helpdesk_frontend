@@ -10,8 +10,8 @@ import { Eye, EyeOff } from "lucide-react";
 const AdminLogin = () => {
   const router = useRouter();
 
-  const [email, setEmail] = useState("jaydemike21@gmail.com");
-  const [password, setPassword] = useState("qwerty123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
