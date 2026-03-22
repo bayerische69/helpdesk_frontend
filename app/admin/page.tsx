@@ -16,26 +16,26 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
-    try {
-      const res = await axios.post("/admin/login", { email, password });
+  try {
+    const res = await axios.post("/admin/login", { email, password });
 
-      if (res.data.success) {
-        router.push("/admin/dashboard");
-      } else {
-        setError(res.data.message);
-      }
-
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
+    if (res.data.success) {
+      // ✅ Immediate redirect after login
+      router.push("/admin/dashboard");
+    } else {
+      setError(res.data.message);
     }
-  };
+  } catch (err: any) {
+    setError(err.response?.data?.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="w-full h-screen flex items-center justify-center bg-[#E3B32A]">
