@@ -10,8 +10,8 @@ import { Eye, EyeOff } from "lucide-react";
 const AdminLogin = () => {
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("jaydemike21@gmail.com");
+  const [password, setPassword] = useState("qwerty123");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -22,11 +22,10 @@ const handleLogin = async (e: React.FormEvent) => {
   setLoading(true);
 
   try {
-    const res = await axios.post("/admin/login", { email, password });
+    const res = await axios.post("/admin/login", { email, password }, {withCredentials: true});
 
     if (res.data.success) {
-      // ✅ Immediate redirect after login
-      router.push("/admin/dashboard");
+      console.log("Login successful, redirecting...");
     } else {
       setError(res.data.message);
     }

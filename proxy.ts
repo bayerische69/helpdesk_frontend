@@ -2,19 +2,20 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function proxy(req: NextRequest) {
-  const token = req.cookies.get("tokenForMiddleware")?.value; // ✅ must use .value
+  const token = req.cookies.get("tokenForMiddleware")?.value;
   const pathname = req.nextUrl.pathname;
 
-  const isAdminRoute = pathname.startsWith("/admin");
-  const isLoginPage = pathname === "/admin";
+  const loginPages = ["/admin", "/admin/login"];
+  const isLoginPage = loginPages.includes(pathname);
+  const isProtectedRoute = pathname.startsWith("/admin/") && !isLoginPage;
 
-  // Not logged in → block admin pages except login
-  if (isAdminRoute && !isLoginPage && !token) {
+  // Not logged in, trying to access admin page
+  if (!token && isProtectedRoute) {
     return NextResponse.redirect(new URL("/admin", req.url));
   }
 
-  // Already logged in → prevent going back to login
-  if (isLoginPage && token) {
+  // Already logged in, visiting login page
+  if (token && isLoginPage) {
     return NextResponse.redirect(new URL("/admin/dashboard", req.url));
   }
 
